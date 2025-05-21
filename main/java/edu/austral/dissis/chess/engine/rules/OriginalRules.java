@@ -23,7 +23,7 @@ public class OriginalRules implements Rules {
   }
 
   public boolean validPosition(Position position) {
-    return position.row() < 9 && position.row() > 0;
+    return position.row() < 9 && position.row() > 0 && position.column() < 9 && position.column() > 0;
   }
 
   @Override

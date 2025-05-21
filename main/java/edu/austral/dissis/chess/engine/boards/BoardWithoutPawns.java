@@ -15,7 +15,9 @@ public class BoardWithoutPawns implements BoardOrganization {
         addRook(initialCells);
         addKnight(initialCells);
         initialCells.put(new Position(1, 4), new Queen(Color.WHITE));
+        initialCells.put(new Position(1, 5), new King(Color.WHITE));
         initialCells.put(new Position(8, 4), new Queen(Color.BLACK));
+        initialCells.put(new Position(8, 5), new King(Color.BLACK));
         return initialCells;
     }
 

@@ -65,7 +65,7 @@ public record Bishop(Color color) implements Piece {
     int currentRow = initialPos.row() + row;
     int currentCol = initialPos.column() + col;
     while (rules.validMove(initialPos, new Position(currentRow, currentCol),this, board, board.getColorToPlay()).valid()) {
-      Position actualPosition = new Position(row, col);
+      Position actualPosition = new Position(currentRow, currentCol);
       if (!cells.containsKey(actualPosition)) {
         currentCol += col;
         currentRow += row;

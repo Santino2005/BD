@@ -30,17 +30,17 @@ public class King implements Piece{
             if(cells.get(finalPos) == null || cells.get(finalPos).color() != this.color){
                 return new MovesType(this, "Valid", initialPos, finalPos, cells);
             }
-        }else if(!this.moved && cells.get(finalPos) instanceof Rook && ((Rook) cells.get(finalPos)).hasMoved() ){
+        }else if(!this.moved && cells.get(finalPos) instanceof Rook && !(((Rook) cells.get(finalPos)).hasMoved())){
             int columnWay = Integer.signum(finalPos.column() - initialPos.column());
             for(int i = initialPos.column() + columnWay; i != finalPos.column(); i += columnWay){
-                if(cells.containsKey(new Position(initialPos.row(), i)) || cells.get(new Position(initialPos.row(), i)).color() != this.color){
+                if(cells.get(new Position(initialPos.row(), i)) != null){
                     return new MovesType(this, "invalid", initialPos, finalPos, cells);
                 }
                 Map<Position, Piece> tempBoard = new HashMap<>(cells);
                 tempBoard.remove(initialPos);
                 tempBoard.put(new Position(initialPos.row(), initialPos.column()), this);
                 Board newBoard = new Board(color, tempBoard, rules, null);
-                if(isInCheck(new Position(initialPos.row(), initialPos.column()),this.color, newBoard)){
+                if(isInCheck(new Position(initialPos.row(), initialPos.column()),this.color, newBoard) || cells.get(new Position(initialPos.row(), i)).color() != this.color){
                     return new MovesType(this, "invalid", initialPos, finalPos, cells);
                 }
             }

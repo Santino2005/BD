@@ -49,7 +49,7 @@ public record Rook(Color color, boolean moved) implements Piece {
     int currentRow = initialPos.row() + row;
     int currentCol = initialPos.column() + col;
     while (rules.validMove(initialPos, new Position(currentRow, currentCol),this, board, board.getColorToPlay()).valid()) {
-      Position actualPosition = new Position(row, col);
+      Position actualPosition = new Position(currentRow, currentCol);
       if (!cells.containsKey(actualPosition)) {
         currentCol += col;
         currentRow += row;
@@ -94,8 +94,6 @@ public record Rook(Color color, boolean moved) implements Piece {
   public boolean hasMoved(){
     return moved;
   }
-
-  // Para los test
   @Override
   public boolean equals(Object obj) {
     if (this == obj) {
