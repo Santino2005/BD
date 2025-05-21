@@ -13,7 +13,7 @@ public class MovesType {
     private final String moveName;
     private final Position initialPos;
     private final Position finalPos;
-    private CallMoves callMoves;
+    private final CallMoves callMoves;
 
     public MovesType(Piece piece, String moveName, Position initialPos, Position finalPos,Map<Position,Piece> board){
         this.moveName = moveName;
@@ -21,6 +21,7 @@ public class MovesType {
         this.cells = board;
         this.finalPos = finalPos;
         this.initialPos = initialPos;
+        this.callMoves = new CallMoves();
     }
 
     public Map<Position,Piece> move(Position initialPos, Position finalPos, Piece piece, Map<Position, Piece> cells){

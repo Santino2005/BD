@@ -14,5 +14,5 @@ import java.util.Map;
 public interface Piece {
   public MovesType validMove(Position initialPos, Position finalPos, Map<Position, Piece> cells);
   public Color color();
-  //public List<Position> possibleMoves(Position initialPos, Map<Position, Piece> cells, Board board, Rules rules);
+  public List<Position> possibleMoves(Position initialPos, Map<Position, Piece> cells, Board board, Rules rules);
 }

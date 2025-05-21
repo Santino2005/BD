@@ -1,5 +1,6 @@
 package edu.austral.dissis.chess.engine.pieces;
 
+import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.engine.Color;
 import edu.austral.dissis.chess.engine.MovesType;
 import edu.austral.dissis.chess.engine.Position;
@@ -47,7 +48,9 @@ public class King implements Piece{
     public King moved(){
         return new King(color, true);
     }
-    public List<Position> possibleMoves(int rowWay, int columnWay, Position initialPos, Position finalPos, Map<Position, Piece> cells) {
+    @Override
+    public List<Position> possibleMoves(Position initialPos, Map<Position, Piece> cells, Board board, Rules rules){
+        
         return null;
     }
 }

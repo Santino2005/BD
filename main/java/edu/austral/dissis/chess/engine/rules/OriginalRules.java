@@ -22,7 +22,7 @@ public class OriginalRules implements Rules {
     return new MovesType(piece,"invalid", initialPos, finalPos, board.getCells());
   }
 
-  private boolean validPosition(Position position) {
+  public boolean validPosition(Position position) {
     return position.row() < 9 && position.row() > 0;
   }
 
@@ -30,4 +30,6 @@ public class OriginalRules implements Rules {
   public Color starterPlayer() {
     return Color.WHITE;
   }
+
+
 }

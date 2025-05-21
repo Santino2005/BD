@@ -6,4 +6,5 @@ import edu.austral.dissis.chess.engine.pieces.Piece;
 public interface Rules {
   public MovesType validMove(Position initialPos, Position finalPos, Piece piece, Board board, Color userColor);
   public Color starterPlayer();
+  public boolean validPosition(Position position);
 }

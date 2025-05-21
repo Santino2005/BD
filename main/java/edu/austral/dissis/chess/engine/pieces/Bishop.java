@@ -1,8 +1,10 @@
 package edu.austral.dissis.chess.engine.pieces;
 
+import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.engine.Color;
 import edu.austral.dissis.chess.engine.MovesType;
 import edu.austral.dissis.chess.engine.Position;
+import edu.austral.dissis.chess.engine.rules.Rules;
 
 import java.util.*;
 
@@ -38,33 +40,40 @@ public record Bishop(Color color) implements Piece {
       currentCol += columnWay;
       currentRow += rowWay;
     }
-    return cells.get(finalPos) == null /*|| isKing(cells, finalPos) */|| capture(cells, finalPos);
+    return cells.get(finalPos) == null || isKing(cells, finalPos) || capture(cells, finalPos);
   }
 
-  /*private boolean isKing(Map<Position, Piece> cells, Position finalPos) {
+  private boolean isKing(Map<Position, Piece> cells, Position finalPos) {
     return !(cells.get(finalPos) instanceof King);
-  }*/
+  }
 
   private boolean capture(Map<Position, Piece> cells, Position finalPos) {
     return cells.get(finalPos).color() != this.color;
   }
 
-  /*@Override
+  @Override
   public List<Position> possibleMoves(Position initialPos, Map<Position, Piece> cells, Board board, Rules rules) {
-    List<Position> possiblesMoves = new ArrayList<>();
-    int currentRow = initialPos.row() + rowWay;
-    int currentCol = initialPos.column() + columnWay;
+    List<Position> allMoves = new ArrayList<>();
+    allMoves.addAll(getMoves(initialPos, cells, 1,1, board, rules, allMoves));
+    allMoves.addAll(getMoves(initialPos, cells, -1,1, board, rules, allMoves));
+    allMoves.addAll(getMoves(initialPos, cells, 1,-1, board, rules, allMoves));
+    allMoves.addAll(getMoves(initialPos, cells, -1,-1, board, rules, allMoves));
+    return allMoves;
+  }
 
-    while (rules.validMove(initialPos, new Position(currentRow, currentCol),this, board, board.getColorToPlay())) {
-      Position actualPosition = new Position(currentRow, currentCol);
+  private List<Position> getMoves(Position initialPos, Map<Position,Piece> cells, int row, int col, Board board, Rules rules, List<Position> list){
+    int currentRow = initialPos.row() + row;
+    int currentCol = initialPos.column() + col;
+    while (rules.validMove(initialPos, new Position(currentRow, currentCol),this, board, board.getColorToPlay()).valid()) {
+      Position actualPosition = new Position(row, col);
       if (!cells.containsKey(actualPosition)) {
-        currentCol += columnWay;
-        currentRow += rowWay;
-        possiblesMoves.add(actualPosition);
+        currentCol += col;
+        currentRow += row;
+        list.add(actualPosition);
       }
     }
-    return possiblesMoves;
-  }*/
+    return list;
+  }
 
   @Override
   public boolean equals(Object obj) {

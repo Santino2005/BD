@@ -1,6 +1,6 @@
 package edu.austral.dissis.chess.engine;
 
-import edu.austral.dissis.chess.engine.pieces.LastMove;
+import edu.austral.dissis.chess.engine.Moves.LastMove;
 import edu.austral.dissis.chess.engine.pieces.Piece;
 
 import java.util.Map;

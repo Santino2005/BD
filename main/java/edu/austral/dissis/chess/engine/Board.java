@@ -1,7 +1,7 @@
 package edu.austral.dissis.chess.engine;
 
 import edu.austral.dissis.chess.engine.boards.BoardOrganization;
-import edu.austral.dissis.chess.engine.pieces.LastMove;
+import edu.austral.dissis.chess.engine.Moves.LastMove;
 import edu.austral.dissis.chess.engine.pieces.Piece;
 import edu.austral.dissis.chess.engine.rules.Rules;
 import java.util.Collections;
@@ -56,6 +56,18 @@ public class Board {
     return new Board(this.colorToPlay, this.cells, this.game, this.lastMove);
   }
 
-  //public HashMap<List<Position>, Piece> getAllPossibleMoves(){}
+  public Map<Position, List<Position>> getAllPossibleMoves(Color color){
+    Map<Position, List<Position>> allMoves = new HashMap<>();
+
+    for (Map.Entry<Position, Piece> move : cells.entrySet()) {
+      Position initialPos = move.getKey();
+      Piece piece = move.getValue();
+      if (piece.color() == color) {
+        List<Position> moves = piece.possibleMoves(initialPos, cells, this, game);
+        allMoves.put(initialPos, moves);
+      }
+    }
+    return allMoves;
+  }
 }
 //Interfaz tablero, Game class, menor responsabilidad posible, pieza reutilizable

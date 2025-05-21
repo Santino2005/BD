@@ -1,9 +1,12 @@
 package edu.austral.dissis.chess.engine.pieces;
 
+import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.engine.Color;
 import edu.austral.dissis.chess.engine.MovesType;
 import edu.austral.dissis.chess.engine.Position;
+import edu.austral.dissis.chess.engine.rules.Rules;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -38,8 +41,20 @@ public class Knight implements Piece {
     return color;
   }
 
-  public List<Position> possibleMoves(Position initialPos, Position finalPos, Map<Position, Piece> cells) {
-    return null;
+  @Override
+  public List<Position> possibleMoves(Position initialPos, Map<Position, Piece> cells, Board board, Rules rules) {
+    List<Position> allMoves = new ArrayList<>();
+    int row = initialPos.row();
+    int col = initialPos.column();
+    List<Position> positions  = List.of(new Position(row+2,col+1), new Position(row+2, col -1),
+            new Position(row-2, col + 1), new Position(row-2,col-1),new Position(row+1,col+2),
+            new Position(row+1,col-2),new Position(row-1,col+2),new Position(row-1,col -2));
+    for(Position pos: positions){
+      if(rules.validMove(initialPos, new Position(row,col),this,board,board.getColorToPlay()).valid()){
+          allMoves.add(pos);
+      }
+    }
+    return allMoves;
   }
 
   @Override
