@@ -59,8 +59,7 @@ public record Rook(Color color, boolean moved) implements Piece {
     return list;
   }
 
-  private boolean checkRow(
-          Position finalPos, Map<Position, Piece> cells, int columnWay, int rowWay) {
+  private boolean checkRow(Position finalPos, Map<Position, Piece> cells, int columnWay, int rowWay) {
     int step = finalPos.column() > columnWay ? 1 : -1;
     for (int col = columnWay + step; col != finalPos.column(); col += step) {
       if (cells.containsKey(new Position(rowWay, col))) {

@@ -50,7 +50,7 @@ public class Knight implements Piece {
             new Position(row-2, col + 1), new Position(row-2,col-1),new Position(row+1,col+2),
             new Position(row+1,col-2),new Position(row-1,col+2),new Position(row-1,col -2));
     for(Position pos: positions){
-      if(rules.validMove(initialPos, new Position(row,col),this,board,board.getColorToPlay()).valid()){
+      if(rules.validMove(initialPos, pos,this,board,board.getColorToPlay()).valid()){
           allMoves.add(pos);
       }
     }

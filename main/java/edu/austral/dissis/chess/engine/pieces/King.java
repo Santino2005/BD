@@ -1,11 +1,12 @@
 package edu.austral.dissis.chess.engine.pieces;
 
-import edu.austral.dissis.chess.engine.Board;
-import edu.austral.dissis.chess.engine.Color;
-import edu.austral.dissis.chess.engine.MovesType;
-import edu.austral.dissis.chess.engine.Position;
+import edu.austral.dissis.chess.engine.*;
+import edu.austral.dissis.chess.engine.Moves.Castling;
+import edu.austral.dissis.chess.engine.rules.CheckRule;
 import edu.austral.dissis.chess.engine.rules.Rules;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,10 +30,17 @@ public class King implements Piece{
             if(cells.get(finalPos) == null || cells.get(finalPos).color() != this.color){
                 return new MovesType(this, "Valid", initialPos, finalPos, cells);
             }
-        }else if(!this.moved && cells.get(finalPos) instanceof Rook && ((Rook) cells.get(finalPos)).hasMoved()){
+        }else if(!this.moved && cells.get(finalPos) instanceof Rook && ((Rook) cells.get(finalPos)).hasMoved() ){
             int columnWay = Integer.signum(finalPos.column() - initialPos.column());
-            for(int i = initialPos.column(); i != finalPos.column(); i = i + columnWay){
-                if(this.color == Color.WHITE  && cells.containsKey(new Position(1,i)) || this.color == Color.BLACK && cells.containsKey(new Position(8,i))){
+            for(int i = initialPos.column() + columnWay; i != finalPos.column(); i += columnWay){
+                if(cells.containsKey(new Position(initialPos.row(), i)) || cells.get(new Position(initialPos.row(), i)).color() != this.color){
+                    return new MovesType(this, "invalid", initialPos, finalPos, cells);
+                }
+                Map<Position, Piece> tempBoard = new HashMap<>(cells);
+                tempBoard.remove(initialPos);
+                tempBoard.put(new Position(initialPos.row(), initialPos.column()), this);
+                Board newBoard = new Board(color, tempBoard, rules, null);
+                if(isInCheck(new Position(initialPos.row(), initialPos.column()),this.color, newBoard)){
                     return new MovesType(this, "invalid", initialPos, finalPos, cells);
                 }
             }
@@ -50,7 +58,29 @@ public class King implements Piece{
     }
     @Override
     public List<Position> possibleMoves(Position initialPos, Map<Position, Piece> cells, Board board, Rules rules){
-        
-        return null;
+        List<Position> allMoves = new ArrayList<>();
+        int row = initialPos.row();
+        int col = initialPos.column();
+        List<Position> positions  = List.of(new Position(row,col+1), new Position(row, col -1),
+                new Position(row+1, col), new Position(row+1,col+1),new Position(row+1,col-1),
+                new Position(row-1,col),new Position(row-1,col-1),new Position(row-1,col +1));
+        for(Position pos: positions){
+            if(rules.validMove(initialPos, pos,this,board,board.getColorToPlay()).valid()){
+                allMoves.add(pos);
+            }
+        }
+        int kingRow = this.color == Color.WHITE ? 1 : 8;
+        if(!this.moved && validMove(initialPos, new Position(kingRow,8),cells).valid()){
+            allMoves.add(new Position(kingRow,8));
+        }else if(!this.moved && validMove(initialPos, new Position(kingRow, 1),cells).valid()){
+            allMoves.add(new Position(kingRow,1));
+        }
+        return allMoves;
+    }
+
+
+    public boolean isInCheck(Position kingPos, Color color, Board board){
+        Color opponent = (color == Color.WHITE) ? Color.BLACK : Color.WHITE;
+        return new CheckRule(board).isCheck(opponent, kingPos, board);
     }
 }

@@ -2,7 +2,9 @@ package edu.austral.dissis.chess.engine;
 
 import edu.austral.dissis.chess.engine.boards.BoardOrganization;
 import edu.austral.dissis.chess.engine.Moves.LastMove;
+import edu.austral.dissis.chess.engine.pieces.King;
 import edu.austral.dissis.chess.engine.pieces.Piece;
+import edu.austral.dissis.chess.engine.rules.CheckRule;
 import edu.austral.dissis.chess.engine.rules.Rules;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,7 +17,7 @@ public class Board {
   private final Rules game;
   private final LastMove lastMove;
 
-  private Board(Color color, Map<Position, Piece> board, Rules rules, LastMove lastMove) {
+  public Board(Color color, Map<Position, Piece> board, Rules rules, LastMove lastMove) {
     this.colorToPlay = color;
     this.cells = Collections.unmodifiableMap(board);
     this.game = rules;
@@ -52,13 +54,13 @@ public class Board {
       newBoard = piece.validMove(initialPos,finalPos,newBoard).move(initialPos,finalPos,piece,newBoard);
       return new Board(
           this.colorToPlay == Color.WHITE ? Color.BLACK : Color.WHITE, newBoard, this.game, newLast);
+
     }
     return new Board(this.colorToPlay, this.cells, this.game, this.lastMove);
   }
 
   public Map<Position, List<Position>> getAllPossibleMoves(Color color){
     Map<Position, List<Position>> allMoves = new HashMap<>();
-
     for (Map.Entry<Position, Piece> move : cells.entrySet()) {
       Position initialPos = move.getKey();
       Piece piece = move.getValue();

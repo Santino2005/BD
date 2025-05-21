@@ -30,6 +30,7 @@ public class MovesType {
     public boolean valid(){
         return !Objects.equals(this.moveName, "invalid");
     }
+
     public Piece getPiece(){
         return piece;
     }

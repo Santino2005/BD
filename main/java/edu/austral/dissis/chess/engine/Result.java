@@ -11,7 +11,6 @@ public class Result {
     private final LastMove lastMove;
 
     public Result(LastMove lastMove, Map<Position,Piece> cells){
-
         this.lastMove = lastMove;
         this.cells = cells;
     }
