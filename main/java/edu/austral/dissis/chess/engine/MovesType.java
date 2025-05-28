@@ -1,38 +1,41 @@
 package edu.austral.dissis.chess.engine;
 
 import edu.austral.dissis.chess.engine.Moves.CallMoves;
-import edu.austral.dissis.chess.engine.pieces.Piece;
-
-import java.util.Map;
+import edu.austral.dissis.chess.engine.PiecesMaked.MixedPieces;
 import java.util.Objects;
 
 public class MovesType {
 
-    private final Map<Position,Piece> cells;
-    private final Piece piece;
-    private final String moveName;
-    private final Position initialPos;
-    private final Position finalPos;
-    private final CallMoves callMoves;
+  private final Board cells;
+  private final MixedPieces piece;
+  private final String moveName;
+  private final Position initialPos;
+  private final Position finalPos;
+  private final CallMoves callMoves;
 
-    public MovesType(Piece piece, String moveName, Position initialPos, Position finalPos,Map<Position,Piece> board){
-        this.moveName = moveName;
-        this.piece = piece;
-        this.cells = board;
-        this.finalPos = finalPos;
-        this.initialPos = initialPos;
-        this.callMoves = new CallMoves();
-    }
+  public MovesType(
+      MixedPieces piece, String moveName, Position initialPos, Position finalPos, Board board) {
+    this.moveName = moveName;
+    this.piece = piece;
+    this.cells = board;
+    this.finalPos = finalPos;
+    this.initialPos = initialPos;
+    this.callMoves = new CallMoves();
+  }
 
-    public Map<Position,Piece> move(Position initialPos, Position finalPos, Piece piece, Map<Position, Piece> cells){
-        return callMoves.getMoves(this.moveName).applyMove(initialPos,finalPos,piece,cells).getNewCells();
-    }
-    public boolean valid(){
-        return !Objects.equals(this.moveName, "invalid");
-    }
+  public Board move(Position initialPos, Position finalPos, MixedPieces piece, Board cells) {
+    return new Board(
+        null,
+        callMoves
+            .getMoves(this.moveName)
+            .applyMove(initialPos, finalPos, piece, cells.getCells())
+            .getNewCells(),
+        cells.getRules(),
+        null,
+        cells.getOriginalCells());
+  }
 
-    public Piece getPiece(){
-        return piece;
-    }
-
+  public boolean valid() {
+    return !Objects.equals(this.moveName, "invalid");
+  }
 }

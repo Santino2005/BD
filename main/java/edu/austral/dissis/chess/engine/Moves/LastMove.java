@@ -1,15 +1,15 @@
 package edu.austral.dissis.chess.engine.Moves;
 
+import edu.austral.dissis.chess.engine.PiecesMaked.MixedPieces;
 import edu.austral.dissis.chess.engine.Position;
-import edu.austral.dissis.chess.engine.pieces.Piece;
 
 public class LastMove {
 
   private final Position from;
   private final Position to;
-  private final Piece piece;
+  private final MixedPieces piece;
 
-  public LastMove(Position from, Position to, Piece piece) {
+  public LastMove(Position from, Position to, MixedPieces piece) {
     this.from = from;
     this.to = to;
     this.piece = piece;
@@ -23,7 +23,7 @@ public class LastMove {
     return to;
   }
 
-  public Piece getPiece() {
+  public MixedPieces getPiece() {
     return piece;
   }
 }

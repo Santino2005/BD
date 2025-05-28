@@ -9,6 +9,7 @@ public class GameFactory {
   public Board createClassicBoard() {
     return new Board(new ClassicBoard(), new OriginalRules(), null);
   }
+
   public Board createNoPawnsBoard() {
     return new Board(new BoardWithoutPawns(), new OriginalRules(), null);
   }

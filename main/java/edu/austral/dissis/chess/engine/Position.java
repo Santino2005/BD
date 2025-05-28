@@ -13,5 +13,4 @@ public record Position(int row, int column) {
     Position pos = (Position) o;
     return row == pos.row && column == pos.column;
   }
-
 }

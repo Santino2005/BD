@@ -1,6 +1,6 @@
 package edu.austral.dissis.chess.engine;
 
-import edu.austral.dissis.chess.engine.pieces.Piece;
+import edu.austral.dissis.chess.engine.PiecesMaked.MixedPieces;
 
 public class User {
 
@@ -13,7 +13,7 @@ public class User {
     this.name = name;
   }
 
-  public Board move(Piece piece, Position initialPos, Position finalPos, Board board) {
+  public Board move(MixedPieces piece, Position initialPos, Position finalPos, Board board) {
     return board.move(initialPos, finalPos, piece, this);
   }
 
